@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+
+import Login from "./components/login";
+
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import { useState } from "react";
+import Mainpage from "./components/mainpage";
 
 function App() {
+  const [loggedIn, updateLogin] = useState(false);
+
+  const [user, udpateUser] = useState({ userid: "", admin: false });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Routes>
+          {loggedIn ? (
+            <Route
+              path="/"
+              element={<Mainpage user={user} udpateUser={udpateUser} />}
+            />
+          ) : (
+            <Route
+              path="/"
+              element={
+                <Login updateLogin={updateLogin} udpateUser={udpateUser} />
+              }
+            />
+          )}
+        </Routes>
+      </Router>
     </div>
   );
 }
